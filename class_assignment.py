@@ -24,15 +24,21 @@ def calc(list):
     mean = np.mean(list)
     return median, mode, sum, mean
 
-new_list = random.sample(range(1, 100), 15)
-calc(new_list)
+sample_list = [random.randint(1,100) for i in range(10)]
+
+new_list = random.sample(range(1, 100), 15) + sample_list
+median, mode, sum, mean = calc(new_list)
+print(f'mode: {mode[0]}')
+print(f'median: {median}')
+print(f'mean: {mean}')
+print(f'sum: {sum}')
 
 # 3create "2" 1-D array and multiply both of the arrays
 def multiply(array1, array2):
     array3 = np.multiply(array1, array2)
     return array3
 
-print(multiply(np.array([1,2,3]), np.array([4,5,6])))
+print(f'product is: {multiply(np.array([1,2,3]), np.array([4,5,6]))}')
 
 
 
@@ -52,4 +58,6 @@ def convert(tup):
     tuple1 = tuple(list1)
     return list1, tuple1
 
-print(convert((1,2,3,4,5)))
+list1, tuple1 = convert((1,2,3,4,5))
+print(f'list: {list1}')
+print(f'tuple: {tuple1}')
