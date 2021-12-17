@@ -204,8 +204,13 @@ if __name__ == '__main__':
         name = input('Enter your name: ')
         phone = input('Enter your phone number: ')
         pin = input('Enter your pin: ')
-        bank = Bank(name, phone, pin)
-        bank.create_account()
+        if not name or not phone or not pin:
+            print('cannot create account. All fields are required')
+            clear()
+            exit()
+        else:
+            bank = Bank(name, phone, pin)
+            bank.create_account()
     elif user_input == '2':
         account_number = input('Enter your account number: ')
         pin = input('Enter your pin: ')
