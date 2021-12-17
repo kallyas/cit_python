@@ -188,7 +188,7 @@ class Bank:
 
 # clear screen function
 def clear():
-    sleep(2)
+    sleep(5)
     os.system('cls' if os.name == 'nt' else 'clear')
 
 if __name__ == '__main__':
@@ -217,7 +217,7 @@ if __name__ == '__main__':
         bank = Bank('', '', '')
         if bank.login(account_number, pin):
             while True:
-                clear()
+                # clear()
                 print('Welcome Back')
                 print('1. Deposit')
                 print('2. Withdraw')
