@@ -1,6 +1,7 @@
 import sys
 import os
-from datetime import datetime
+from datetime import datetime, time
+from time import sleep
 import secrets
 import hashlib
 import mysql.connector
@@ -82,18 +83,40 @@ class Bank:
 
     def transfer(self, amount, account_number):
         # transfer money to another account
-        if amount <= self.balance:
-            self.balance = self.get_balance() - amount
-            self.update_database("transfer", amount)
-            print('Transfer successful')
-            self.check_balance()
+        if amount <= self.get_balance():
+            if self.transfer_to_account(account_number, amount):
+                self.balance = self.get_balance() - amount
+                self.update_database("transfer", amount)
+                print('Transfer successful')
+                self.check_balance()
         else:
             print('Insufficient balance')
+
+    def transfer_to_account(self, account_number, amount):
+        # transfer to another existing account
+        conn, c = self.connect_db()
+        # check if account number exists
+        c.execute('''SELECT account_number, balance FROM bank WHERE account_number = %s''', (account_number,))
+        data = c.fetchone()
+        if data is None:
+            print('Account number does not exist')
+            return False
+        else:
+            # check if account number is not the same as the one logged in
+            if data[0] == self.account_number_login:
+                print('You cannot transfer to your own account')
+                return False
+            else:
+                c.execute('''UPDATE bank SET balance = %s WHERE account_number = %s''', (data[1] + amount, account_number))
+                conn.commit()
+                conn.close()
+                return True
+        
+        
 
     def check_balance(self):
         # check balance
         conn, c = self.connect_db()
-        c = conn.cursor()
         c.execute('''SELECT balance FROM bank WHERE account_number = %s''', (self.account_number_login,))
         data = c.fetchone()
         conn.close()
@@ -160,8 +183,13 @@ class Bank:
 
     def exit(self):
         # exit
+        print('Thank you for using our bank')
         sys.exit()
 
+# clear screen function
+def clear():
+    sleep(2)
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 if __name__ == '__main__':
     # create 1st menu
@@ -184,6 +212,8 @@ if __name__ == '__main__':
         bank = Bank('', '', '')
         if bank.login(account_number, pin):
             while True:
+                clear()
+                print('Welcome Back')
                 print('1. Deposit')
                 print('2. Withdraw')
                 print('3. Transfer')
@@ -195,26 +225,32 @@ if __name__ == '__main__':
                     amount = int(
                         input('Enter the amount you want to deposit: '))
                     bank.deposit(amount)
+                    clear()
                 elif user_input == '2':
                     amount = int(
                         input('Enter the amount you want to withdraw: '))
                     bank.withdraw(amount)
+                    clear()
                 elif user_input == '3':
                     amount = int(
                         input('Enter the amount you want to transfer: '))
                     account_number = input(
                         'Enter the account number you want to transfer to: ')
                     bank.transfer(amount, account_number)
+                    clear()
                 elif user_input == '4':
                     bank.check_balance()
+                    clear()
                 elif user_input == '5':
                     bank.check_history()
+                    clear()
                 elif user_input == '6':
                     bank.exit()
                 else:
                     print('Invalid input')
         else:
             print('Login failed')
+            clear()
     elif user_input == '3':
         sys.exit()
     else:
