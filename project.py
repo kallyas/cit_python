@@ -16,12 +16,13 @@ def create_project(name, language, project_dir):
         # execute nodejs project creation
         print('Creating a Node.js project called ' + name)
         os.system('npm init -y')
-        os.system('npm install express --save')
+        os.system('yarn add express cors jsonwebtoken mongoose dotenv morgan')
         os.system('curl https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore -o .gitignore')
         os.system('git init')
         os.system('echo ' + name + ' >> README.md' if not os.name == 'nt' else 'echo ' + name + ' >> README.md')
         os.system('git add .')
         os.system('git commit -m "first commit"')
+        os.system('mkdir src && cd src && mkdir config controllers models routes utils helpers && cd ..')
         os.system('code .')
     elif language == 'react' or language == 'reactjs' or language == 'react.js':
         # execute react project creation
