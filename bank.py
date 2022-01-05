@@ -27,16 +27,27 @@ class Bank:
         self.account_number = self.generate_account_number()
         self.balance = 0
         self.account_number_login = ''
+        self.login_try = 0
         # create database immediately when an instance of Bank is created
         self.create_database()
 
     def create_database(self):
         # create database
         conn, c = self.connect_db()
-        c.execute('''CREATE TABLE IF NOT EXISTS bank (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), phone VARCHAR(255), pin VARCHAR(255), account_number VARCHAR(255), balance INT)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS bank (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), phone VARCHAR(255), pin VARCHAR(255), account_number VARCHAR(255) not null unique, balance INT)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS transactions (id INT PRIMARY KEY AUTO_INCREMENT, account_number VARCHAR(255) not null, transaction_type VARCHAR(255) not null, amount INT not null, date DATETIME default CURRENT_TIMESTAMP)''')
+
         conn.commit()
         conn.close()
         print('Database created')
+
+    def check_login_tries(self):
+        if self.login_try == 3:
+            print('You have exceeded the maximum number of login attempts')
+            return False
+        else:
+            return True
+
 
     def generate_account_number(self):
         # account number format: AC+last 4 digits of phone number+current date+random number and account number max length 15
@@ -163,11 +174,14 @@ class Bank:
         else:
             # hash pin and compare with database
             hashed_pin = hashlib.sha256(pin.encode()).hexdigest()
-            if hashed_pin == data[3]:
+            self.login_try = self.check_login_tries()
+            if hashed_pin == data[3] and self.login_try:
                 self.account_number_login = data[4]
+                self.balance = data[5]
                 print('Login successful')
                 return True
             else:
+                self.login_try += 1
                 print('Incorrect pin')
                 return False
 
