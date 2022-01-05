@@ -45,6 +45,26 @@ def create_project(name, language, project_dir):
         os.system('git add .')
         os.system('git commit -m "first commit"')
         os.system('code .')
+    elif language == 'web' or language == 'html' or language == 'css' or language == 'javascript':
+        # execute web project creation
+        print('Creating a Web project called ' + name)
+        os.system('git init')
+        os.system('echo ' + name + ' >> README.md' if not os.name == 'nt' else 'echo ' + name + ' >> README.md')
+        os.system('mkdir js css assets && echo ' + name + ' >> index.html' if not os.name == 'nt' else 'touch index.html')
+        os.system('git add .')
+        os.system('git commit -m "first commit"')
+        os.system('code .')
+    elif language == 'php':
+        # execute php project creation
+        print('Creating a PHP project called ' + name)
+        os.system('git init')
+        os.system('echo ' + name + ' >> README.md' if not os.name == 'nt' else 'echo ' + name + ' >> README.md')
+        os.system('composer init')
+        os.system('echo ' + name + ' >> index.php' if not os.name == 'nt' else 'touch index.php')
+        os.system('curl https://gist.githubusercontent.com/Yousha/a5514afd6cda8afba800f5af9f7115b4/raw/a27554246db50778257d079a89705e79f8488151/.gitignore -o .gitignore')
+        os.system('git add .')
+        os.system('git commit -m "first commit"')
+        os.system('code .')
     else:
         print('Language not supported')
 
