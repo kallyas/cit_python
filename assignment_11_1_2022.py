@@ -24,7 +24,20 @@ def skip_15():
         print(i)
 
 
-skip_15()
+# skip_15()
+
+def print_pyramid():
+    for i in range(1, 6):
+        print(' ' * (5 - i), '*' * (2 * i - 1))
+
+def pyramid_inverse():
+    for i in range(1, 6):
+        print(' ' * i, '*' * (2 * (5 - i) - 1))
+
+pyramid_inverse()
+
+
+print_pyramid()
 
 # 3. create a dictionary and using a for loop print only values
 def create_dict():
