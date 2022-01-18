@@ -30,7 +30,7 @@ star_letter()
 def dictionary_replace():
     d = {"name": "John", "age": 30, "city": "New York"}
     print(d)
-    d.pop(key="name")
+    d.pop("name")
     d["first_name"] = "Jane"
     print(d)
 
