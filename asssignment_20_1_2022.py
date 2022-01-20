@@ -55,7 +55,7 @@ is_even_odd()
 # 5. create two lists and combine them into one list then print all items using a for loop
 
 def merge_lists():
-    # get 10 posts
+    # get products
     products = requests.get('https://hub.dummyapis.com/products?noofRecords=10&idStarts=1001&currency=usd').json()
 
     product_names = []
