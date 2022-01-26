@@ -43,11 +43,11 @@ print(store.add_products(Product("Tea", 5)))
 
 print(store.inflation(0.1))
 
-print(store.products)
+print(store.print_products())
 
 print(store.set_clearance(0.5))
 
-print(store.products)
+print(store.print_products())
 
 # sell a product
 print(store.sell_product(Product('Tea')))

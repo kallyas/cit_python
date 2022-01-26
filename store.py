@@ -10,6 +10,9 @@ class Product:
     def get_name(self):
         return self.product['name']
 
+    def get_price(self):
+        return self.product['price']
+
     def update_price(self, percent_discount: float, is_clearance: bool):
         if is_clearance:
             self.product['price'] = self.product['price'] - (self.product['price'] * percent_discount)
@@ -26,6 +29,10 @@ class Store:
 
     def __repr__(self):
         return f"Store({self.name}, {self.products})"
+
+    def print_products(self):
+        for product in self.products:
+            print(product.get_name(), product.get_price())
 
     def add_products(self, product: Product):
         self.products.append(product)
