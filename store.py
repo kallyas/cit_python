@@ -1,62 +1,56 @@
+# Product class
+from typing import Union
+class Product:
+    def __init__(self, name: str, price: Union[int, float] = 0):
+        self.product = {'name': name, 'price': price}
+
+    def __repr__(self):
+        return str(self.product)
+
+    def get_name(self):
+        return self.product['name']
+
+    def update_price(self, percent_discount: float, is_clearance: bool):
+        if is_clearance:
+            self.product['price'] = self.product['price'] - (self.product['price'] * percent_discount)
+        else:
+            self.product['price'] = self.product['price'] + (self.product['price'] * percent_discount)
+
+
+
 # store class
-
-from math import prod
-
-
 class Store:
-    def __init__(self, name, products):
+    def __init__(self, name: str, products: list):
         self.products = products
         self.name = name
 
     def __repr__(self):
         return f"Store({self.name}, {self.products})"
 
-    def add_products(self, product):
+    def add_products(self, product: Product):
         self.products.append(product)
-        return f"{product['name']} added to {self.name}'s inventory"
+        return f"{str(product.get_name())} added to {self.name}'s inventory"
 
-    def remove_products(self, product):
-        self.products.remove(product)
-        return f"{product['name']} has been removed from {self.name}'s inventory"
+    def remove_products(self, product: Product):
+        self.products = [p for p in self.products if p.get_name() != product.get_name()]
+        return f"{str(product.get_name())} has been removed from {self.name}'s inventory"
 
     def stock_count(self):
         return len(self.products)
 
-    def sell_product(self, product):
-        self.products.remove(product)
-        return f"{product['name']} has been sold!"
+    def sell_product(self, product: Product):
+        self.products = [p for p in self.products if p.get_name() != product.get_name()]
+        return f"{product.get_name()} has been sold!"
 
-    def inflation(self, percent_increase):
-        self.update_price(percent_increase, False)
-
-    def set_clearance(self, percent_discount):
-        self.update_price(percent_discount, True)
-
-    def update_price(self, percent_increase, is_clearance):
+    def inflation(self, percent_increase: float):
         for product in self.products:
-            if is_clearance:
-                product['price'] = product['price'] * (1 - percent_increase)
-            else:
-                product['price'] = product['price'] * (1 + percent_increase)
+            product.update_price(percent_increase, False)
+        return f"Increased product price by {percent_increase}%"
 
-# Product class
-class Product:
-    def __init__(self, name, price):
-        self.name = name
-        self.price = price
-
-    def __repr__(self):
-        return f"Product({self.name}, {self.price})"
-
-    def __str__(self):
-        return self.name, self.price
-        
-
-    def update_price(self, percent_discount, is_clearance):
-        if is_clearance:
-            self.price = self.price - (self.price * percent_discount)
-        else:
-            self.price = self.price + (self.price * percent_discount)
+    def set_clearance(self, percent_discount: float):
+        for product in self.products:
+            product.update_price(percent_discount, True)
+        return f"Discounted products by {percent_discount}%"
 
 
         

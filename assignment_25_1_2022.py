@@ -30,22 +30,30 @@ except:
 
 
 for product in products:
-    items.append({'name': product['name'], 'price': int(float(product['price'][2:]))})
+    items.append(Product(product['name'],  int(float(product['price'][2:]))))
 
 store = Store("CIT Store", items)
 
 print(store.products)
 
-# add a product to the store
-print(store.add_products({'name': 'pen', 'price': 2}))
-print(store.add_products({'name': 'book', 'price': 20}))
 
+# add a product to the store
+print(store.add_products(Product("Coffee", 10)))
+print(store.add_products(Product("Tea", 5)))
+
+print(store.inflation(0.1))
+
+print(store.products)
+
+print(store.set_clearance(0.5))
+
+print(store.products)
 
 # sell a product
-print(store.sell_product({'name': 'pen', 'price': 2}))
+print(store.sell_product(Product('Tea')))
 
 # remove a product
-print(store.remove_products({'name': 'book', 'price': 20}))
+print(store.remove_products(Product('coffee')))
 
 
 # 3. Create a polymorphism class funtion.
