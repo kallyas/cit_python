@@ -59,8 +59,3 @@ class Store:
             product.update_price(percent_discount, True)
         return f"Discounted products by {percent_discount}%"
 
-
-        
-
-
-        
