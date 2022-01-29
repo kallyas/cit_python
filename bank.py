@@ -5,6 +5,8 @@ from time import sleep
 import secrets
 import hashlib
 import mysql.connector
+import re
+from typing import Union
 
 # Bank class
 # user can create account, deposit, withdraw, transfer, check balance, check history, and exit
@@ -20,7 +22,7 @@ import mysql.connector
 
 
 class Bank:
-    def __init__(self, name, phone, pin):
+    def __init__(self, name: str, phone: str, pin: Union[int, str]):
         self.name = name
         self.phone = phone
         self.pin = hashlib.sha256(pin.encode()).hexdigest()
@@ -161,7 +163,7 @@ class Bank:
         conn.close()
         print('Database updated')
 
-    def login(self, account_number, pin):
+    def login(self, account_number: str, pin: Union[int, str]):
         # login
         conn, c = self.connect_db()
         c.execute('''SELECT * FROM bank WHERE account_number = %s''',
@@ -205,8 +207,12 @@ def clear():
     sleep(5)
     os.system('cls' if os.name == 'nt' else 'clear')
 
-if __name__ == '__main__':
-    # create 1st menu
+
+def checkPhoneNumber(phoneNumber: str) -> bool:
+    regex = re.compile()
+    return True
+
+def main(Bank, clear):
     print('Welcome to the Bank')
     print('1. Create account')
     print('2. Login')
@@ -275,3 +281,7 @@ if __name__ == '__main__':
     else:
         print('Invalid input')
         sys.exit()
+
+if __name__ == '__main__':
+    # create 1st menu
+    main(Bank, clear)

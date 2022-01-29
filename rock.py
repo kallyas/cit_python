@@ -38,7 +38,7 @@ print("Thanks for playing!")
 
 # create a python pyramid object using multiple numbers
 
-multiples_of_two = [i for i in range(0, 21, 2)]
+multiples_of_two: list = [i for i in range(0, 21, 2)]
 print(multiples_of_two)
 
 def pyramid(height):
