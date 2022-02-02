@@ -12,12 +12,24 @@ void swap(int *a, int *b)
 
 
 int main(){
-    int n, i, j
+    int n, i, j;
     printf("Enter the number of elements: ");
     scanf("%d", &n);
     int a[n];
     printf("Enter the elements: ");
-    scanf("%d", &a[i]);
+    for(i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    // bubble sort
+    for(i = 0; i < n; i++)
+        for(j = 0; j < n-i-1; j++)
+            if(a[j] > a[j+1])
+                swap(&a[j], &a[j+1]);
+
+    
+    // print sorted array
+
+    return 0;
 
 }
 
