@@ -1,7 +1,7 @@
-const fs = require('fs');
+import { readFileSync, writeFileSync } from 'fs';
 
 // read data.json
-const data = fs.readFileSync('data.json');
+const data = readFileSync('data.json');
 
 // parse data.json
 const dataJson = JSON.parse(data);
@@ -15,4 +15,4 @@ const dataJsonMap = dataJson.map(function(item) {
 });
 
 // overwrite data.json
-fs.writeFileSync('data.json', JSON.stringify(dataJsonMap));
+writeFileSync('data.json', JSON.stringify(dataJsonMap));
