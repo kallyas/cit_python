@@ -49,7 +49,7 @@ def create_list() -> list:
 def pop_list(items: list) -> int:
     return items.pop()
 
-def replace_list(items: list, value) -> list:
+def replace_list(items: list, value: int) -> list:
     items[0] = value
     return items
 
@@ -76,3 +76,18 @@ def print_name(name: str):
         i += 1
 
 print_name("Iden")
+
+# 6. Create a program that prints out prime numbers using the while loop
+def print_prime_numbers(n: int) -> list:
+    prime_numbers = []
+    i = 2
+    while i < n:
+        for j in range(2, i):
+            if i % j == 0:
+                break
+        else:
+            prime_numbers.append(i)
+        i += 1
+    return prime_numbers
+
+print(print_prime_numbers(100))
