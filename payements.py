@@ -33,6 +33,6 @@ class Payements:
 
 if __name__ == '__main__':
     username = "sandbox"
-    api_key = "03efaf5a1fe9314e37e20ddb8b1d2c1f9ff9975f0582ef76deededc287ea6a5b"
+    api_key = "API_KEY"
     payements = Payements(username, api_key)
     payements.b2c()
