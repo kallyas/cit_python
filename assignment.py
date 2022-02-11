@@ -72,7 +72,7 @@ def create_list():
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="This is a program that calls functions")
-    parser.add_argument("--function", help="the function to call")
+    parser.add_argument("-f", "--function", help="the function to call")
     args = parser.parse_args()
     if args.function == "country_capital":
         country_capital()
@@ -86,8 +86,16 @@ def main():
         print(convert_foot_to_inch(5))
     elif args.function == "create_list":
         print(len(create_list()))
+    elif args.function == "":
+        print("please enter a function")
     else:
-        print("no function was called")
+        # if the user enters a function that does not exist, print unknown function if function is not empty
+        if args.function != None:
+            print(f"unknown function {args.function}")
+        else:
+            # print usage 
+            parser.print_usage()
+
 
 
 if __name__ == "__main__":
