@@ -208,9 +208,20 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def checkPhoneNumber(phoneNumber: str) -> bool:
-    regex = re.compile()
-    return True
+# UG phone format
+# MTN: 077, 078, 076
+# AIRTEL: 070, 075
+# length: 10
+def checkPhoneNumber(phone_number: str) -> bool:
+    airtel_regex = re.compile(r'^(070|075)')
+    mtn_regex = re.compile(r'^(077|078|076)')
+    if len(phone_number) == 10:
+        if airtel_regex.search(phone_number) or mtn_regex.search(phone_number):
+            return True
+        else:
+            return False
+    else:
+        return False
 
 def main(Bank, clear):
     print('Welcome to the Bank')
@@ -223,6 +234,9 @@ def main(Bank, clear):
     if user_input == '1':
         name = input('Enter your name: ')
         phone = input('Enter your phone number: ')
+        while not checkPhoneNumber(phone):
+            print('Invalid phone number')
+            phone = input('Enter your phone number: ')
         pin = input('Enter your pin: ')
         if not name or not phone or not pin:
             print('cannot create account. All fields are required')

@@ -81,3 +81,23 @@ odd_numbers()
 
 # create a file
 f = open("test.txt", "w")
+
+
+# phone number regex
+import re
+
+# UG phone format
+# MTN: 077, 078, 076
+# AIRTEL: 070, 075
+# length: 10
+def phone_number_validator(phone_number):
+    airtel_regex = re.compile(r'^(070|075)')
+    mtn_regex = re.compile(r'^(077|078|076)')
+    if len(phone_number) == 10:
+        if airtel_regex.search(phone_number) or mtn_regex.search(phone_number):
+            return True
+        else:
+            return False
+    else:
+        return False
+        
