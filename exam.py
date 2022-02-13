@@ -100,4 +100,36 @@ def phone_number_validator(phone_number):
             return False
     else:
         return False
-        
+
+# optimize phone number validator
+def phone_number_validator(phone_number):
+    if len(phone_number) == 10:
+        if phone_number[0:3] in ('077', '078', '076'):
+            return True
+        elif phone_number[0:3] in ('070', '075'):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+# phone number validator
+def phone_number_validator(phone_number):
+    if len(phone_number) == 10:
+        if phone_number[0:3] in ('077', '078', '076') or phone_number[0:3] in ('070', '075'):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+# phone number validator
+def phone_number_validator(phone_number):
+    if len(phone_number) == 10:
+        if phone_number[0:3] in ('077', '078', '076') or phone_number[0:3] in ('070', '075'):
+            return True
+        else:
+            return False
+    else:
+        return False
