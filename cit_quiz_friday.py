@@ -129,6 +129,7 @@ def merge_sort(list_to_sort: list):
         right_half = list_to_sort[mid:]
         left_half = merge_sort(left_half)
         right_half = merge_sort(right_half)
+        print(f"left_half: {left_half}, right_half: {right_half}")
         return merge(left_half, right_half)
 
 
@@ -147,7 +148,7 @@ def merge(left_half: list, right_half: list):
         sorted_list.extend(right_half)
     return sorted_list
 
-print(merge_sort([6, 8, 1, 4, -4, -2]))
+print(merge_sort([6, 8, 1, 4, -4, -2, -100, -8]))
 
 
 

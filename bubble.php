@@ -18,7 +18,7 @@ function bubbleSort() {
     return $array;
 }
 
-$sorted_arr = bubbleSort(9, 6, 4, 8, 3, 7, 2, 1, 5);
+$sorted_arr = bubbleSort(9, 6, 4, 8, 3, -7, 2, 1, 5);
 
 error_log(print_r($sorted_arr, true));
 
@@ -45,5 +45,5 @@ function selectSort() {
     return $array;
 }
 
-$select_arr = selectSort(9, 6, 4, 8, 3, 7, 2, 1, 5);
+$select_arr = selectSort(-9, 6, 4, 8, 3, 7, 2, 1, 5);
 error_log(print_r($select_arr, true));
