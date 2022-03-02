@@ -150,5 +150,3 @@ def merge(left_half: list, right_half: list):
 
 print(merge_sort([6, 8, 1, 4, -4, -2, -100, -8]))
 
-
-
