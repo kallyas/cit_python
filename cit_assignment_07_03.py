@@ -112,7 +112,7 @@ def quicksort(array, start, end):
 	yield from quicksort(array, j + 1, end)
 
 # function to plot bars
-def showGraph():
+def visualize_quick_sort():
 
 	# for random unique values
 	n = int(input("enter array size\n"))
@@ -173,7 +173,7 @@ def showGraph():
 		repeat = False)
 	plt.show()
 
-showGraph()
+visualize_quick_sort()
 
 
 
