@@ -294,6 +294,8 @@ def main(Bank, clear):
         print('Invalid input')
         sys.exit()
 
+    
+
 if __name__ == '__main__':
     # create 1st menu
     main(Bank, clear)
