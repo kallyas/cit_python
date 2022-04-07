@@ -19,13 +19,6 @@ img = download_image(github_logo)
 resized_img = resize_image(img, width=300)
 show_image(img, resized_img)
 
-user = get_user()
-
-user_password = input("Enter your password: ")
-if user_password == user['password']:
-    print("Login successful")
-else:
-    print("Login failed")
 
 def send_money(sender, recipient, amount):
     data = {

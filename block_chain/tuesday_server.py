@@ -1,9 +1,42 @@
 from flask import Flask, render_template, request, jsonify
-from tuesday_quiz import Block, Blockchain
+from tuesday_quiz import User, Blockchain
 
 app = Flask(__name__)
 
 blockchain = Blockchain()
+user = User()
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if user.login(username, password):
+            return dashboard(username=username)
+        else:
+            return render_template('login.html', error='Invalid username or password')
+    else:
+        return render_template('login.html')
+
+@app.route('/dashboard', methods=['GET'])
+def dashboard(username):
+    return render_template('index.html', username=username)
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if user.create_user(username, password):
+            return render_template('login.html')
+        else:
+            return render_template('signup.html', error='Username already exists')
+    else:
+        return render_template('signup.html')
 
 
 @app.route('/send-money', methods=['POST'])

@@ -130,7 +130,7 @@ class Blockchain:
     def proof_of_work(self, last_proof):
         proof = 0
         while self.valid_proof(last_proof, proof) is False:
-            proof += 1
+             proof += 1
 
         return proof
 
@@ -152,14 +152,14 @@ class Store_Chart:
     def __init__(self, rows, columns):
         self.rows = rows
         self.columns = columns
-        
+
     def data_frame(self):
         df = pd.DataFrame({
             'Products': self.rows,
             'Sales': self.columns
         })
         return df
-    
+
     def plot_chart(self):
         df = pd.DataFrame(self.columns, index=self.rows)
         plt.title("A chart for sales of my store")
@@ -184,7 +184,7 @@ class Plot_Graph:
 
 
 """
-3. download an image with opencv and make that image smaller 
+3. download an image with opencv and make that image smaller
 """
 
 def download_image(url):
@@ -218,12 +218,22 @@ def show_image(original, resized):
 
 
 """
-5. create a user login. user could create a password and 
+5. create a user login. user could create a password and
 the output will display login successful
 """
 
-def get_user():
-    return {
-        'username': 'admin',
-        'password': 'admin'
-    }
+class User:
+    def __init__(self):
+        self.users = {}
+
+    def create_user(self, username, password):
+        password_hash = self.hash_password(password)
+        return self.users.update({username: password_hash}) if username not in self.users else False
+
+    def hash_password(self, password):
+        password_hash = hashlib.sha256(password.encode())
+        return password_hash.hexdigest()
+
+    def login(self, username, password):
+        password_hash = self.hash_password(password)
+        return self.users[username] == password_hash if username in self.users else False
