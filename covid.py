@@ -78,7 +78,7 @@ def get_data(state):
     if not data:
         print("no data for {}".format(us_states[state.upper()]))
         sys.exit(1)
-    state_name = data[0]['state']
+    state_name = us_states[state]
     return data, state_name
 
 
