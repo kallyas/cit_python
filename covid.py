@@ -72,7 +72,7 @@ def get_data(state):
     """
     get data for a given state
     """
-    url = "https://covidtracking.com/api/v1/states/{}/daily.json".format(state)
+    url = "https://api.covidtracking.com/v1/states/{}/daily.json".format(state)
     r = requests.get(url)
     data = r.json()
     if not data:
