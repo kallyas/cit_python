@@ -74,6 +74,11 @@ def main():
     project_name = input('Enter project name: ')
     project_dir = input('Enter project directory: ')
     language = input('Enter language: ')
+
+    if project_name == '' or project_dir == '' or language == '':
+        print('Please enter all the fields')
+        return
+
     create_project_dir(project_dir)
     create_project(project_name, language, project_dir)
 

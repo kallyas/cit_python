@@ -22,6 +22,10 @@ from typing import Union
 
 
 class Bank:
+    """
+    Banking system class
+    :params name, phone, pin
+    """
     def __init__(self, name: str, phone: str, pin: Union[int, str]):
         self.name = name
         self.phone = phone
@@ -30,7 +34,6 @@ class Bank:
         self.balance = 0
         self.account_number_login = ''
         self.login_try = 0
-        # create database immediately when an instance of Bank is created
         self.create_database()
 
     def create_database(self):
@@ -44,11 +47,7 @@ class Bank:
         print('Database created')
 
     def check_login_tries(self):
-        if self.login_try == 3:
-            print('You have exceeded the maximum number of login attempts')
-            return False
-        else:
-            return True
+        return self.login_try < 3
 
 
     def generate_account_number(self):
@@ -75,7 +74,9 @@ class Bank:
         except mysql.connector.Error as err:
             print('Error' + str(err))
             conn.rollback()
-        conn.close()
+        finally:
+            c.close()
+            conn.close()
 
     def deposit(self, amount):
         # deposit money
@@ -176,8 +177,7 @@ class Bank:
         else:
             # hash pin and compare with database
             hashed_pin = hashlib.sha256(pin.encode()).hexdigest()
-            self.login_try = self.check_login_tries()
-            if hashed_pin == data[3] and self.login_try:
+            if hashed_pin == data[3] and self.check_login_tries():
                 self.account_number_login = data[4]
                 self.balance = data[5]
                 print('Login successful')
@@ -188,12 +188,16 @@ class Bank:
                 return False
 
     def connect_db(self):
-        conn = mysql.connector.connect(
+        try:
+            conn = mysql.connector.connect(
             host='localhost',
             user='root',
             passwd='',
             database='bank'
-        )
+            )
+        except:
+            raise mysql.connector.Error("Could not connect to database")
+
         c = conn.cursor()
         return conn, c
 
@@ -213,15 +217,9 @@ def clear():
 # AIRTEL: 070, 075
 # length: 10
 def checkPhoneNumber(phone_number: str) -> bool:
-    airtel_regex = re.compile(r'^(070|075)\d{7}$')
-    mtn_regex = re.compile(r'^(077|078|076)\d{7}$')
-    # check phone number
-    if airtel_regex.search(phone_number) or mtn_regex.search(phone_number):
-        return True
-    else:
-        return False
+    return re.match(r'^(077|078|076|070|075)\d{7}$', phone_number)
 
-def main(Bank, clear):
+def main(Bank: Bank, clear):
     print('Welcome to the Bank')
     print('1. Create account')
     print('2. Login')
@@ -247,7 +245,7 @@ def main(Bank, clear):
         account_number = input('Enter your account number: ')
         pin = input('Enter your pin: ')
         bank = Bank('', '', '')
-        if bank.login(account_number, pin):
+        if bank.login(account_number, pin) and bank.login_try <= 3:
             while True:
                 # clear()
                 print('Welcome Back')

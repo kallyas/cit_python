@@ -1,5 +1,6 @@
 # 1. create a bubble sort algorithm that sorts out 10 numbers in order
 
+
 def bubble_sort(items: list):
     """
     Sort the items by swapping adjacent items if they are out of order
